@@ -1,0 +1,5 @@
+yandex-cloud-ml-sdk
+chromadb
+pypdf
+pyTelegramBotAPI
+pandas
