@@ -5,6 +5,7 @@ from providers.chroma_db import ChromaClient
 from providers.yandex_gpt import YandexGpt
 from typing import List
 import csv
+from providers.admin_api import send_create_file
 
 def on_get_new_file_message(bot, chat_id:int, mime_type:str, file_id:str, file_name:str, yandex_gpt:YandexGpt, chromadb:ChromaClient):
     if mime_type != 'application/pdf' and mime_type != 'text/csv':
@@ -14,6 +15,8 @@ def on_get_new_file_message(bot, chat_id:int, mime_type:str, file_id:str, file_n
     file_content = get_content_from_file(bot, mime_type, file_id)
 
     index_new_file(file_content, chat_id, yandex_gpt, chromadb, file_name)
+
+    send_create_file(chat_id, file_name, mime_type, str(file_content))
 
     bot.send_message(chat_id, 'Отлично я получил ваш файл!')
 
